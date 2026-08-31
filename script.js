@@ -1,4 +1,4 @@
-let preguntaActual = 1;
+let preguntaActual = 0;
 let correctas = 0;
 let incorrectas = 0;
 
@@ -31,7 +31,7 @@ function generarOperacion() {
 
     if (signoOperacion === 0) {
         
-        let = respuestaSuma = numero1 + numero2;
+        let respuestaSuma = numero1 + numero2;
 
         return {
             numero1: numero1,
@@ -56,3 +56,65 @@ function generarOperacion() {
         };
     } 
 }
+
+let operaciones = []
+
+for (let i = 0; i < 10; i++) {
+    operaciones.push(generarOperacion());
+}
+
+function mostrarPregunta() {
+
+    let operacionActual = operaciones[preguntaActual];
+
+    let alternativas = generarAlternativas(operacionActual.respuesta);
+
+    console.log(
+    operacionActual.numero1 +
+    " " +
+    operacionActual.signo + 
+    " " +
+    operacionActual.numero2
+    );
+
+    console.log(alternativas);
+}
+
+function generarAlternativas(respuestaCorrecta){
+
+    let alternativas = [];
+
+    alternativas.push(respuestaCorrecta);
+
+    while (alternativas.length < 4) {
+
+        let diferencia = Math.floor(Math.random() * 11) - 5;
+
+        let alternativa = respuestaCorrecta + diferencia;
+
+        if (!alternativas.includes(alternativa)) {
+            alternativas.push(alternativa);
+        }
+    }
+
+    alternativas.sort(() => Math.random() - 0.5);
+    
+    return alternativas;
+
+}
+
+function responder(respuestaElegida){
+
+    let operacionActual = operaciones[preguntaActual];
+
+    comprobarRespuesta(respuestaElegida, operacionActual.respuesta);
+
+    console.log("Correctas: ", correctas);
+    console.log("Incorrectas: ", incorrectas);
+
+    preguntaActual++;
+
+    mostrarPregunta();
+}
+mostrarPregunta();
+responder(9);
