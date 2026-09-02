@@ -1,0 +1,46 @@
+body {
+
+
+font-family: Arial, sans-serif;
+text-align: center;
+margin-top: 80px;
+
+
+}
+
+#juego {
+
+
+width: 400px;
+margin: auto;
+
+}
+
+#operacion {
+
+
+font-size: 40px;
+margin: 30px;
+
+
+}
+
+#alternativas {
+
+
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 15px;
+
+
+}
+
+button {
+
+
+font-size: 24px;
+padding: 20px;
+cursor: pointer;
+
+
+}

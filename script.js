@@ -1,6 +1,11 @@
 let preguntaActual = 0;
+
 let correctas = 0;
 let incorrectas = 0;
+
+let tiempoInicio; 
+let tiempoFinal;
+
 
 function comprobarRespuesta(respuestaElegida, respuestaCorrecta) {
     
@@ -67,17 +72,29 @@ function mostrarPregunta() {
 
     let operacionActual = operaciones[preguntaActual];
 
+    document.getElementById("numeroPregunta").textContent = 
+        "Pregunta " + (preguntaActual + 1) + " de 10";
+
     let alternativas = generarAlternativas(operacionActual.respuesta);
 
-    console.log(
-    operacionActual.numero1 +
-    " " +
-    operacionActual.signo + 
-    " " +
-    operacionActual.numero2
-    );
+    document.getElementById("operacion").textContent = 
+        operacionActual.numero1 +
+        " " +
+        operacionActual.signo + 
+        " " +
+        operacionActual.numero2;
 
-    console.log(alternativas);
+    let botones = document.querySelectorAll("#alternativas button");
+
+    for (let i = 0; i < botones.length; i++) {
+
+        botones[i].textContent = alternativas[i];
+
+        botones[i].onclick = function() {
+            responder(alternativas[i]);
+        };
+    }
+
 }
 
 function generarAlternativas(respuestaCorrecta){
@@ -112,9 +129,32 @@ function responder(respuestaElegida){
     console.log("Correctas: ", correctas);
     console.log("Incorrectas: ", incorrectas);
 
-    preguntaActual++;
+    if (preguntaActual === 9) {
 
-    mostrarPregunta();
+
+        tiempoFinal = Date.now();
+
+        let tiempoTotal = (tiempoFinal-tiempoInicio) / 1000;
+
+        document.getElementById("juego").style.display = "none";
+
+        document.getElementById("resultado").style.display = "block";
+
+        console.log("Juego Terminado");
+        console.log("Tiempo: ", tiempoTotal, "segundos");
+
+        document.getElementById("resultadoCorrectas").textContent = "Correctas: " + correctas;
+        document.getElementById("resultadoIncorrectas").textContent = "Incorrectas: " + incorrectas;
+        document.getElementById("resultadoTiempo").textContent = "Tiempo: " + tiempoTotal + " segundos";
+
+    } else {
+
+        preguntaActual++;
+
+        mostrarPregunta();
+    }
+
+    
 }
+tiempoInicio = Date.now();
 mostrarPregunta();
-responder(9);
